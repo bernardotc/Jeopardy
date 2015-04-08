@@ -5,8 +5,10 @@
  */
 package server;
 
+import beans.User;
+import database.UserHandler;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bernardot
  */
-@WebServlet(name = "controller", urlPatterns = {"/controller"})
-public class controller extends HttpServlet {
+@WebServlet(name = "Login_Signin", urlPatterns = {"/Login_Signin"})
+public class Login_Signin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,19 +33,35 @@ public class controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet controller</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet controller at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String operation = (String) request.getParameter("do");
+        User usuario = null;
+        String url = "/footer.html";
+        UserHandler uHandler = new UserHandler();
+
+        if (operation.equals("signin")) {
+            String pass = Long.toHexString(Double.doubleToLongBits(Math.random()));
+            String user = (String) request.getParameter("newUser");
+            String nom = (String) request.getParameter("newFName");
+            String ape = (String) request.getParameter("newLName");
+            String correo = (String) request.getParameter("newMail");
+
+            usuario = new User(nom, ape, user, correo, pass);
+            uHandler.newUser(usuario);
+
+            url = "/emailConfirmation.jsp";
+        } else {
+            String user = (String) request.getParameter("userid");
+            String password = (String) request.getParameter("userpswd");
+
+            usuario = uHandler.getUser(user, password);
+
+            if (usuario != null) {
+                url = "/confirmation.jsp"; // Cambiar despues por el correcto
+            }
         }
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

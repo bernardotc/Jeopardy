@@ -9,17 +9,17 @@ package beans;
  *
  * @author bernardot
  */
-public class user {
+public class User {
     private String nombre;
     private String apellido;
     private String usuario;
     private String correo;
     private String password;
 
-    public user() {
+    public User() {
     }
 
-    public user(String nombre, String apellido, String usuario, String correo, String password) {
+    public User(String nombre, String apellido, String usuario, String correo, String password) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.usuario = usuario;

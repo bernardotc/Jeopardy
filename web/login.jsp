@@ -46,7 +46,7 @@
         <fieldset>
             <div id="login">
                 <h3>Iniciar sesión</h3>
-                <form>
+                <form name="login" action="control?do=login" method="post">
                     Usuario <br><input type="text" name="userid" required autofocus><br>
                     Contraseña <br><input type="password" name="userpswd" required><br>
                     <center><input type="submit" value="Iniciar"></center>
@@ -55,7 +55,7 @@
 
             <div id="signin">
                 <h3>Registrarse</h3>
-                <form>
+                <form name="signin" action="control?do=signin" method="post">
                     Nombre(s) <br><input type="text" name="newFName" required><br>
                     Apellido(s) <br><input type="text" name="newLName" required><br>
                     Correo <br><input type="text" name="newMail" required><br>
