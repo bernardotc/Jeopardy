@@ -32,3 +32,9 @@ footer {
     color: black;
     padding-top: 1px;
 }
+
+h3 {
+                font-family: 'Open Sans', sans-serif;
+                text-align: center;
+                color: #77AAAA;
+            }

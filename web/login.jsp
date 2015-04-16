@@ -34,7 +34,7 @@
                 border: none;
             }
             
-            div h3 {
+            div {
                 font-family: 'Open Sans', sans-serif;
                 text-align: center;
                 color: #77AAAA;

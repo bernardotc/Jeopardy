@@ -32,11 +32,12 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String operation = (String) request.getParameter("do");
-        System.out.print("dadada");
         String url = "/confirmation.jsp";
         
         if (operation.equals("login") || operation.equals("signin")) {
             url = "/login-signin";
+        } else if (operation.equals("create") || operation.equals("insertTema") || operation.equals("insertCategoria") || operation.equals("insertPista")) {
+            url = "/data";
         } 
         
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);

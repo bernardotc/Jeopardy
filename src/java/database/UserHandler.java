@@ -7,7 +7,6 @@ package database;
 
 import beans.User;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +33,6 @@ public class UserHandler {
         try {            
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM Usuario WHERE usuario='"+user+"' and password='"+password+"'");
-            System.out.println("abre;");
             while (results.next()) {
                 String nombre=results.getString("nombre");
                 String apellido=results.getString("apellido");
@@ -43,9 +41,7 @@ public class UserHandler {
                 String passwod=results.getString("password");
                 System.out.println(passwod);
                 usr = new User(nombre, apellido, usuario, correo, passwod);
-                System.out.println("dentro");
             }
-            System.out.println("cierra");
             statement.close();
             
         } catch (SQLException ex) {
