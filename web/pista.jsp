@@ -4,22 +4,56 @@
     Author     : bernardot
 --%>
 
+<%@page import="beans.Tema"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="header.html" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="Style/formStyle.css">
-        <title>Crea tu pista de Jeopardy</title>
+        <script src="Script/modificarTemaCategoriaPista.js"></script>
+        <script>
+            window.onload = function cargarPistas() {
+                request = getRequestObject();
+                request.onreadystatechange = handleResponsePonerP;
+                request.open("POST", "control?do=getP", true);
+                x = document.getElementById("temas").selectedIndex;
+                temaid = document.getElementsByTagName("option")[x].value;
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                request.send("temaid=" + temaid);
+            }
+        </script>
+        <title>Pistas de Jeopardy</title>
     </head>
     <body>
-        <h1>Crea tu nueva pista de Jeopardy</h1>
-        <form>
-            Redacción o descripción de la pista <br><textarea name="descripcion" autofocus required>Escribe tu descripción aquí.</textarea><br>
-            Valor del premio <input type="number" name="puntos" required><br>
-            Respuesta <br><textarea name="respuesta" autofocus required>Escribe tu respuesta aquí.</textarea><br>
-        </form>
+        <h3>Listado de pistas de Jeopardy</h3>
+    <center>
+        <p style="width: 95%;">A continuación se presenta todas las pistas que contiene el juego de Jeopardy. Se puede <span style="color:#5588FF;"><b>modificar</b></span>
+            los campos directamente haciendo <span style="color:#5588FF;"><b>doble click</b></span> sobre el valor que se desea modificar. Al presionar Enter
+            o seleccionar otra cosa, el valor ingresado se guardará en el sistema.</p>
+        <select id="temas" onchange="getPistas()">
+            <%
+                ArrayList temas = (ArrayList) request.getAttribute("listaTemas");
+                for (int x = 0; x < temas.size(); x++) {
+                    Tema aux = (Tema) temas.get(x);
+                    out.print("<option value=\"" + aux.getId() + "\">" + aux.getTema() + "</option>");
+                }
+            %>
+        </select><br><br>
+        <table style="width: 95%;" id="pistas">
+            <thead>
+            <td>Redacción</td>
+            <td>Respuesta</td>
+            <td>Puntos</td>
+            <td>Categoría</td>
+            <td>Borrar</td>
+            </thead>
+            <tbody id="contenido">
+
+            </tbody>
+        </table>
+    </center>
     </body>
 </html>
 <%@include file="footer.html" %>

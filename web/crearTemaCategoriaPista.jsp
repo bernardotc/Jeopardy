@@ -87,7 +87,7 @@
                                 categorias = (ArrayList) request.getAttribute("listaCategorias");
                                 for (int x = 0; x < categorias.size(); x++) {
                                     Categoria aux = (Categoria) categorias.get(x);
-                                    out.print("<option value=\"" + aux.getId() + "\">" + aux.getNombre() + "</option>");
+                                    out.print("<option value=\"" + aux.getId() + "\">" + aux.getNombre() + " - " + aux.getTema().getTema() + "</option>");
                                 }%>
                         </select>
                     </div><br>

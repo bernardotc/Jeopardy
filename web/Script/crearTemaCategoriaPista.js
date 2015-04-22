@@ -27,13 +27,15 @@ function crearTema() {
 function handleResponseTema() {
     if (request.readyState == 4) {
         if (request.responseText === "error") {
-            document.getElementById("respuestaCategoria").innerHTML = "No se pudo crear el tema, intente después o contacte al administrador.";
+            document.getElementById("respuestaTema").style.color = "red";
+            document.getElementById("respuestaTema").innerHTML = "No se pudo crear el tema, intente después o contacte al administrador.";
             setTimeout(function () {
-                document.getElementById("respuestaCategoria").innerHTML = "";
+                document.getElementById("respuestaTema").innerHTML = "";
             }, 3000);
         } else {
             document.getElementById("temaN").value = "";
             document.getElementById("temas").innerHTML = request.responseText;
+            document.getElementById("respuestaTema").style.color = "green";
             document.getElementById("respuestaTema").innerHTML = "Tema creado exitosamente.";
             setTimeout(function () {
                 document.getElementById("respuestaTema").innerHTML = "";
@@ -57,6 +59,7 @@ function crearCategoria() {
 function handleResponseCategoria() {
     if (request.readyState == 4) {
         if (request.responseText === "error") {
+            document.getElementById("respuestaCategoria").style.color = "red";
             document.getElementById("respuestaCategoria").innerHTML = "No se pudo crear la categoría, intente después o contacte al administrador.";
             setTimeout(function () {
                 document.getElementById("respuestaCategoria").innerHTML = "";
@@ -67,6 +70,7 @@ function handleResponseCategoria() {
             x = document.getElementById("temas").selectedIndex;
             document.getElementsByTagName("option")[x].selected = false;
             document.getElementById("categorias").innerHTML = request.responseText;
+            document.getElementById("respuestaCategoria").style.color = "green";
             document.getElementById("respuestaCategoria").innerHTML = "Categoria creada exitosamente.";
             setTimeout(function () {
                 document.getElementById("respuestaCategoria").innerHTML = "";
@@ -91,6 +95,7 @@ function crearPista() {
 function handleResponsePista() {
     if (request.readyState == 4) {
         if (request.responseText === "error") {
+            document.getElementById("respuestaPista").style.color = "red";
             document.getElementById("respuestaPista").innerHTML = "No se pudo crear la pista, intente después o contacte al administrador.";
             setTimeout(function () {
                 document.getElementById("respuestaPista").innerHTML = "";
@@ -102,6 +107,7 @@ function handleResponsePista() {
             x = document.getElementById("categorias").selectedIndex;
             document.getElementsByTagName("option")[x].selected = false;
             document.getElementById("categorias").innerHTML = request.responseText;
+            document.getElementById("respuestaPista").style.color = "green";
             document.getElementById("respuestaPista").innerHTML = "Pista creada exitosamente.";
             setTimeout(function () {
                 document.getElementById("respuestaPista").innerHTML = "";

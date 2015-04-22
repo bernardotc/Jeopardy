@@ -6,8 +6,11 @@
 package database;
 
 import beans.Categoria;
+import beans.Pista;
 import beans.Tema;
 import beans.User;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -35,7 +38,7 @@ public class TemaCategoriaPistaHandler {
         ArrayList temas = new ArrayList();
         try {
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM Tema");
+            ResultSet results = statement.executeQuery("SELECT * FROM Tema ORDER BY id ASC");
             while (results.next()) {
                 int id=results.getInt("id");
                 String tema=results.getString("tema");
@@ -53,7 +56,7 @@ public class TemaCategoriaPistaHandler {
         ArrayList categorias = new ArrayList();
         try {
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM Categoria INNER JOIN Tema ON Categoria.temaid = Tema.id");
+            ResultSet results = statement.executeQuery("SELECT * FROM Categoria INNER JOIN Tema ON Categoria.temaid = Tema.id ORDER BY Categoria.id ASC");
             while (results.next()) {
                 int id=results.getInt("id");
                 String nombre=results.getString("nombre");
@@ -69,6 +72,60 @@ public class TemaCategoriaPistaHandler {
             Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return categorias;
+    }
+    
+    public ArrayList getPistas() {
+        ArrayList pistas = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id");
+            while (results.next()) {
+                int id=results.getInt("id");
+                String redaccion=results.getString("redaccion");
+                String respuesta=results.getString("respuesta");
+                int puntos=results.getInt("puntos");
+                int categoriaid=results.getInt("categoriaid");
+                String nombre=results.getString("nombre");
+                String descripcion=results.getString("descripcion");
+                String tema=results.getString("tema");
+                int temaid=results.getInt("temaid");
+                Tema t = new Tema(temaid, tema);
+                Categoria c = new Categoria(id, nombre, descripcion, t);
+                Pista p = new Pista(id, redaccion, respuesta, puntos, c);
+                pistas.add(p);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pistas;
+    }
+    
+    public ArrayList getPistas(int temid) {
+        ArrayList pistas = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id WHERE Categoria.temaid=" + temid);
+            while (results.next()) {
+                int id=results.getInt("id");
+                String redaccion=results.getString("redaccion");
+                String respuesta=results.getString("respuesta");
+                int puntos=results.getInt("puntos");
+                int categoriaid=results.getInt("categoriaid");
+                String nombre=results.getString("nombre");
+                String descripcion=results.getString("descripcion");
+                String tema=results.getString("tema");
+                int temaid=results.getInt("temaid");
+                Tema t = new Tema(temaid, tema);
+                Categoria c = new Categoria(id, nombre, descripcion, t);
+                Pista p = new Pista(id, redaccion, respuesta, puntos, c);
+                pistas.add(p);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pistas;
     }
     
     public boolean newTema(String tema) {
@@ -108,5 +165,31 @@ public class TemaCategoriaPistaHandler {
             Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public boolean modify(int id, String tipo, String valor, String db) {
+        try {
+            Statement statement = connection.createStatement();
+            String query = "UPDATE " + db + " SET " + tipo + "='" + valor + "' WHERE id=" + id;
+            statement.executeUpdate(query);
+            statement.close();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } 
+    }
+    
+    public boolean delete(int id, String db) {
+        try {
+            Statement statement = connection.createStatement();
+            String query = "DELETE FROM " + db + " WHERE id=" + id;
+            statement.executeUpdate(query);
+            statement.close();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } 
     }
 }

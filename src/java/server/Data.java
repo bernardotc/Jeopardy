@@ -6,6 +6,7 @@
 package server;
 
 import beans.Categoria;
+import beans.Pista;
 import beans.Tema;
 import database.TemaCategoriaPistaHandler;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class Data extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String operation = (String) request.getParameter("do");
         TemaCategoriaPistaHandler createHandler = new TemaCategoriaPistaHandler();
         String url = "/crearTemaCategoriaPista.jsp";
@@ -89,6 +91,84 @@ public class Data extends HttpServlet {
             int categoriaid = Integer.parseInt(id);
             boolean creado = createHandler.newPista(redaccion, respuesta, puntos, categoriaid);
             if (!creado) {
+                out.print("error");
+            } else {
+                out.print("ok");
+            }
+        } else if (operation.equals("showT")) {
+            ArrayList temas = createHandler.getTemas();
+            request.setAttribute("listaTemas", temas);
+            url = "/tema.jsp";
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+        } else if (operation.equals("showC")) {
+            ArrayList categorias = createHandler.getCategorias();
+            request.setAttribute("listaCategorias", categorias);
+            ArrayList temas = createHandler.getTemas();
+            request.setAttribute("listaTemas", temas);
+            url = "/categoria.jsp";
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+        } else if (operation.equals("showP")) {
+            ArrayList temas = createHandler.getTemas();
+            request.setAttribute("listaTemas", temas);
+            url = "/pista.jsp";
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+        } else if (operation.equals("change")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String i = (String) request.getParameter("id");
+            int id = Integer.parseInt(i);
+            String tipo = (String) request.getParameter("tipo");
+            String valor = (String) request.getParameter("valor");
+            String db = (String) request.getParameter("db");
+            boolean creado = createHandler.modify(id, tipo, valor, db);
+            if (!creado) {
+                out.print("error");
+            } else {
+                out.print("ok");
+            }
+        } else if (operation.equals("getT")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            ArrayList temas = createHandler.getTemas();
+            for (int i = 0; i < temas.size(); i++) {
+                Tema aux = (Tema) temas.get(i);
+                out.print("<option value=\"" + aux.getId() + "\">" + aux.getTema() + "</option>");
+            }
+        } else if (operation.equals("getP")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String t = request.getParameter("temaid");
+            int temaid = Integer.parseInt(t);
+            ArrayList pistas = createHandler.getPistas(temaid);
+            for (int i = 0; i < pistas.size(); i++) {
+                Pista aux = (Pista) pistas.get(i);
+                out.print("\t\t\t\t<tr>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-redaccion-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificar(this)\">" + aux.getRedaccion() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-respuesta-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificar(this)\">" + aux.getRespuesta() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-puntos-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificarTema(this)\">" + aux.getPuntos() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-categoriaid-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificarCategoria(this)\">" + aux.getCategoria().getNombre() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td class=\"button\"><input id=\"Pista-" + aux.getId() + "\" class=\"specialButton\" type =\"button\" value=\"Borrar fila\"</td>\n");
+                out.print("\t\t\t\t</tr>\n");
+            }
+        } else if (operation.equals("getC")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            ArrayList categorias = createHandler.getCategorias();
+            for (int i = 0; i < categorias.size(); i++) {
+                Categoria aux = (Categoria) categorias.get(i);
+                out.print("<option class=\"categoriaOption\" value=\"" + aux.getId() + "\">" + aux.getNombre() + " - " + aux.getTema().getTema() + "</option>");
+            }
+        } else if (operation.equals("erase")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String i = (String) request.getParameter("id");
+            int id = Integer.parseInt(i);
+            String db = (String) request.getParameter("db");
+            boolean borrado = createHandler.delete(id, db);
+            if (!borrado) {
                 out.print("error");
             } else {
                 out.print("ok");
