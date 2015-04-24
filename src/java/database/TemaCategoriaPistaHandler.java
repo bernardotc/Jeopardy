@@ -112,7 +112,7 @@ public class TemaCategoriaPistaHandler {
                 String tema=results.getString("tema");
                 int temaid=results.getInt("temaid");
                 Tema t = new Tema(temaid, tema);
-                Categoria c = new Categoria(id, nombre, descripcion, t);
+                Categoria c = new Categoria(categoriaid, nombre, descripcion, t);
                 Pista p = new Pista(id, redaccion, respuesta, puntos, c);
                 pistas.add(p);
             }
@@ -139,7 +139,7 @@ public class TemaCategoriaPistaHandler {
                 String tema=results.getString("tema");
                 int temaid=results.getInt("temaid");
                 Tema t = new Tema(temaid, tema);
-                Categoria c = new Categoria(id, nombre, descripcion, t);
+                Categoria c = new Categoria(categoriaid, nombre, descripcion, t);
                 Pista p = new Pista(id, redaccion, respuesta, puntos, c);
                 pistas.add(p);
             }
@@ -166,7 +166,7 @@ public class TemaCategoriaPistaHandler {
                 String tema=results.getString("tema");
                 int temaid=results.getInt("temaid");
                 Tema t = new Tema(temaid, tema);
-                Categoria c = new Categoria(id, nombre, descripcion, t);
+                Categoria c = new Categoria(categoriaid, nombre, descripcion, t);
                 Pista p = new Pista(id, redaccion, respuesta, puntos, c);
                 pistas.add(p);
             }

@@ -5,12 +5,12 @@
  */
 var request;
 var objeto;
-var cunta1 = 0;
-var cunta2 = 0;
-var cunta3 = 0;
-var cunta4 = 0;
-var cunta5 = 0;
-var cunta6 = 0;
+var cunta1 = 5;
+var cunta2 = 5;
+var cunta3 = 5;
+var cunta4 = 5;
+var cunta5 = 5;
+var cunta6 = 5;
 
 function getRequestObject() {
     if (window.ActiveXObject) {
@@ -140,6 +140,20 @@ function checarPistasCompleto() {
 
 function getPistas(obj)
 {
+    if(obj.id == "1") {
+        cunta1 = 0;
+    } else if(obj.id == "2") {
+        cunta2 = 0;
+    } else if(obj.id == "3") {
+        cunta3 = 0;
+    } else if(obj.id == "4") {
+        cunta4 = 0;
+    } else if(obj.id == "5") {
+        cunta5 = 0;
+    } else if(obj.id == "6") {
+        cunta6 = 0;
+    }
+    
     if (obj.value != "") {
         request = getRequestObject();
         request.onreadystatechange = handleResponsePonerPUno;
@@ -161,6 +175,19 @@ function getCategorias(obj)
     request.open("POST", "control?do=getCAg", true);
     objeto = obj.parentNode.parentNode.childNodes[7].childNodes[1];
     temaid = obj.value;
+    if(obj.id == "1") {
+        cunta1 = 0;
+    } else if(obj.id == "2") {
+        cunta2 = 0;
+    } else if(obj.id == "3") {
+        cunta3 = 0;
+    } else if(obj.id == "4") {
+        cunta4 = 0;
+    } else if(obj.id == "5") {
+        cunta5 = 0;
+    } else if(obj.id == "6") {
+        cunta6 = 0;
+    }
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.send("temaid=" + temaid);
 }

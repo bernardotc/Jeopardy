@@ -42,7 +42,8 @@ public class Controller extends HttpServlet {
                 operation.equals("change") || operation.equals("getT") || operation.equals("getP") || operation.equals("getC") || 
                 operation.equals("erase") || operation.equals("getPAg") || operation.equals("getCAg")) {
             url = "/data";
-        } else if (operation.equals("prepareG") || operation.equals("saveProf")) {
+        } else if (operation.equals("prepareG") || operation.equals("saveProf") || operation.equals("showProf") || 
+                operation.equals("changeProf") || operation.equals("modifyProf")) {
             url = "/game";
         } 
         
