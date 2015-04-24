@@ -74,11 +74,33 @@ public class TemaCategoriaPistaHandler {
         return categorias;
     }
     
+    public ArrayList getCategorias(int temid) {
+        ArrayList categorias = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Categoria INNER JOIN Tema ON Categoria.temaid = Tema.id WHERE Categoria.temaid=" + temid + " ORDER BY Categoria.id ASC");
+            while (results.next()) {
+                int id=results.getInt("id");
+                String nombre=results.getString("nombre");
+                String descripcion=results.getString("descripcion");
+                int temaid=results.getInt("temaid");
+                String tema=results.getString("tema");
+                Tema t = new Tema(temaid, tema);
+                Categoria c = new Categoria(id, nombre, descripcion, t);
+                categorias.add(c);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return categorias;
+    }
+    
     public ArrayList getPistas() {
         ArrayList pistas = new ArrayList();
         try {
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id");
+            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id ORDER BY Pista.puntos ASC");
             while (results.next()) {
                 int id=results.getInt("id");
                 String redaccion=results.getString("redaccion");
@@ -105,7 +127,34 @@ public class TemaCategoriaPistaHandler {
         ArrayList pistas = new ArrayList();
         try {
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id WHERE Categoria.temaid=" + temid);
+            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id WHERE Categoria.temaid=" + temid + " ORDER BY Pista.puntos ASC");
+            while (results.next()) {
+                int id=results.getInt("id");
+                String redaccion=results.getString("redaccion");
+                String respuesta=results.getString("respuesta");
+                int puntos=results.getInt("puntos");
+                int categoriaid=results.getInt("categoriaid");
+                String nombre=results.getString("nombre");
+                String descripcion=results.getString("descripcion");
+                String tema=results.getString("tema");
+                int temaid=results.getInt("temaid");
+                Tema t = new Tema(temaid, tema);
+                Categoria c = new Categoria(id, nombre, descripcion, t);
+                Pista p = new Pista(id, redaccion, respuesta, puntos, c);
+                pistas.add(p);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pistas;
+    }
+    
+    public ArrayList getPistasC(int categorid) {
+        ArrayList pistas = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id WHERE Pista.categoriaid=" + categorid + " ORDER BY Pista.puntos ASC");
             while (results.next()) {
                 int id=results.getInt("id");
                 String redaccion=results.getString("redaccion");

@@ -13,8 +13,8 @@
         <title>Menu Jeopardy</title>
     </head>
     <body>
-        <h1>¡Escoge con lo que te quieras divertir!</h1>
-        <a href="">Crear un juego de Jeopardy</a><br>
+        <h3>¡Escoge con lo que te quieras divertir!</h3>
+        <a href="control?do=prepareG">Crear un juego de Jeopardy</a><br>
         <a href="control?do=create">Crear temas, categorías y pistas</a><br>
         <a href="control?do=showT">Mostrar todos los temas</a><br>
         <a href="control?do=showC">Mostrar todas las categorías</a><br>

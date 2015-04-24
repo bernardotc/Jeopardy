@@ -28,6 +28,15 @@
         <url-pattern>/data</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>Game</servlet-name>
+        <servlet-class>server.Game</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Game</servlet-name>
+        <url-pattern>/game</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

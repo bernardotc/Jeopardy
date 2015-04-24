@@ -219,7 +219,7 @@ function salvarModC(obj, valor, id, tipo, DB, texto, t)
     request.send("id=" + id + "&tipo=" + tipo + "&valor=" + valor + "&db=" + DB);
     i = document.getElementById("temas").selectedIndex;
     tema = document.getElementsByTagName("option")[i].innerText;
-    if (t[1] == tema) {
+    if (t == tema) {
         obj.replaceChild(document.createTextNode(texto), obj.firstChild);
     } else {
         document.getElementById("pistas").deleteRow(obj.parentNode.rowIndex);

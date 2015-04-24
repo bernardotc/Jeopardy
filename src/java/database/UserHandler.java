@@ -34,13 +34,14 @@ public class UserHandler {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM Usuario WHERE usuario='"+user+"' and password='"+password+"'");
             while (results.next()) {
+                int id = results.getInt("id");
                 String nombre=results.getString("nombre");
                 String apellido=results.getString("apellido");
                 String usuario=results.getString("usuario");
                 String correo=results.getString("correo");
                 String passwod=results.getString("password");
                 System.out.println(passwod);
-                usr = new User(nombre, apellido, usuario, correo, passwod);
+                usr = new User(id, nombre, apellido, usuario, correo, passwod);
             }
             statement.close();
             
@@ -50,14 +51,9 @@ public class UserHandler {
         return usr;
     }
     
-    public boolean newUser(User user) {
+    public boolean newUser(String n, String u, String a, String c, String p) {
         try {
             Statement statement = connection.createStatement();
-            String n = user.getNombre();
-            String u = user.getUsuario();
-            String a = user.getApellido();
-            String c = user.getCorreo();
-            String p = user.getPassword();
             String query = "INSERT INTO Usuario (usuario, nombre, apellido, correo, password) values ('" + u + "','" + n + "','" + a + "','" + c + "','" + p + "')";
             statement.executeUpdate(query);
             statement.close();

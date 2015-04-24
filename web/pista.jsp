@@ -24,6 +24,32 @@
                 request.send("temaid=" + temaid);
             }
         </script>
+        <style>
+            .select-style {
+                border: 1px solid aquamarine;
+                width: 380px;
+                padding: .5em .5em .5em .5em;
+                border-radius: 3px;
+                overflow: hidden;
+                background: #88CCCC url("http://www.javascriptsource.com/css/arrowd.gif") no-repeat 98% 50%;
+            }
+
+            .select-style select {
+                color: #5566FF;
+                font-size: 16px;
+                padding: 5px 8px;
+                width: 108%;
+                border: none;
+                box-shadow: none;
+                background: transparent;
+                background-image: none;
+                -webkit-appearance: none;
+            }
+
+            .select-style select:focus {
+                outline: none;
+            }
+        </style>
         <title>Pistas de Jeopardy</title>
     </head>
     <body>
@@ -32,15 +58,17 @@
         <p style="width: 95%;">A continuación se presenta todas las pistas que contiene el juego de Jeopardy. Se puede <span style="color:#5588FF;"><b>modificar</b></span>
             los campos directamente haciendo <span style="color:#5588FF;"><b>doble click</b></span> sobre el valor que se desea modificar. Al presionar Enter
             o seleccionar otra cosa, el valor ingresado se guardará en el sistema.</p>
-        <select id="temas" onchange="getPistas()">
-            <%
-                ArrayList temas = (ArrayList) request.getAttribute("listaTemas");
-                for (int x = 0; x < temas.size(); x++) {
-                    Tema aux = (Tema) temas.get(x);
-                    out.print("<option value=\"" + aux.getId() + "\">" + aux.getTema() + "</option>");
-                }
-            %>
-        </select><br><br>
+        <div class="select-style">
+            <select id="temas" onchange="getPistas()">
+                <%
+                    ArrayList temas = (ArrayList) request.getAttribute("listaTemas");
+                    for (int x = 0; x < temas.size(); x++) {
+                        Tema aux = (Tema) temas.get(x);
+                        out.print("<option value=\"" + aux.getId() + "\">" + aux.getTema() + "</option>");
+                    }
+                %>
+            </select>
+        </div><br>
         <table style="width: 95%;" id="pistas">
             <thead>
             <td>Redacción</td>
@@ -54,6 +82,6 @@
             </tbody>
         </table>
     </center>
-    </body>
+</body>
 </html>
 <%@include file="footer.html" %>

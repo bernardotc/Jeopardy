@@ -70,9 +70,13 @@ td.button {
 thead {
     background: #77AAAA;
     color: whitesmoke;
-    font-size: 18px;
+    font-size: 16px;
     font-style: italic;
     text-transform: uppercase;
+}
+
+thead td {
+    padding: 2px 5px 2px 5px;
 }
 
 .specialButton {

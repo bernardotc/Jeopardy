@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +34,7 @@ public class Login_Signin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String operation = (String) request.getParameter("do");
         User usuario = null;
         String url = "/footer.html";
@@ -45,8 +47,7 @@ public class Login_Signin extends HttpServlet {
             String ape = (String) request.getParameter("newLName");
             String correo = (String) request.getParameter("newMail");
 
-            usuario = new User(nom, ape, user, correo, pass);
-            uHandler.newUser(usuario);
+            uHandler.newUser(nom, ape, user, correo, pass);
 
             url = "/emailConfirmation.jsp";
         } else {
@@ -55,8 +56,10 @@ public class Login_Signin extends HttpServlet {
 
             usuario = uHandler.getUser(user, password);
 
+            HttpSession session = request.getSession();
+            session.setAttribute("user", usuario);
             if (usuario != null) {
-                url = "/confirmation.jsp"; // Cambiar despues por el correcto
+                url = "/menu.jsp"; // Cambiar despues por el correcto
             }
         }
 

@@ -39,8 +39,11 @@ public class Controller extends HttpServlet {
             url = "/login-signin";
         } else if (operation.equals("create") || operation.equals("insertTema") || operation.equals("insertCategoria") ||
                 operation.equals("insertPista") || operation.equals("showT") || operation.equals("showC") || operation.equals("showP") ||
-                operation.equals("change") || operation.equals("getT") || operation.equals("getP") || operation.equals("getC") || operation.equals("erase")) {
+                operation.equals("change") || operation.equals("getT") || operation.equals("getP") || operation.equals("getC") || 
+                operation.equals("erase") || operation.equals("getPAg") || operation.equals("getCAg")) {
             url = "/data";
+        } else if (operation.equals("prepareG") || operation.equals("saveProf")) {
+            url = "/game";
         } 
         
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);

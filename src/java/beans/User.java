@@ -10,6 +10,7 @@ package beans;
  * @author bernardot
  */
 public class User {
+    private int id;
     private String nombre;
     private String apellido;
     private String usuario;
@@ -19,7 +20,8 @@ public class User {
     public User() {
     }
 
-    public User(String nombre, String apellido, String usuario, String correo, String password) {
+    public User(int id, String nombre, String apellido, String usuario, String correo, String password) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.usuario = usuario;
@@ -27,6 +29,14 @@ public class User {
         this.password = password;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNombre() {
         return nombre;
     }

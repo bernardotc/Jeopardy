@@ -106,7 +106,6 @@ function handleResponsePista() {
             document.getElementById("puntos").value = "";
             x = document.getElementById("categorias").selectedIndex;
             document.getElementsByTagName("option")[x].selected = false;
-            document.getElementById("categorias").innerHTML = request.responseText;
             document.getElementById("respuestaPista").style.color = "green";
             document.getElementById("respuestaPista").innerHTML = "Pista creada exitosamente.";
             setTimeout(function () {

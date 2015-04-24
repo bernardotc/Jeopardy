@@ -148,7 +148,7 @@ public class Data extends HttpServlet {
                 out.print("\t\t\t\t<tr>\n");
                 out.print("\t\t\t\t\t<td id=\"Pista-redaccion-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificar(this)\">" + aux.getRedaccion() + "</a></td>\n");
                 out.print("\t\t\t\t\t<td id=\"Pista-respuesta-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificar(this)\">" + aux.getRespuesta() + "</a></td>\n");
-                out.print("\t\t\t\t\t<td id=\"Pista-puntos-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificarTema(this)\">" + aux.getPuntos() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-puntos-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificar(this)\">" + aux.getPuntos() + "</a></td>\n");
                 out.print("\t\t\t\t\t<td id=\"Pista-categoriaid-" + aux.getId() + "\" class=\"special\" ondblclick=\"modificarCategoria(this)\">" + aux.getCategoria().getNombre() + "</a></td>\n");
                 out.print("\t\t\t\t\t<td class=\"button\"><input id=\"Pista-" + aux.getId() + "\" class=\"specialButton\" type =\"button\" value=\"Borrar fila\"</td>\n");
                 out.print("\t\t\t\t</tr>\n");
@@ -172,6 +172,33 @@ public class Data extends HttpServlet {
                 out.print("error");
             } else {
                 out.print("ok");
+            }
+        } else if (operation.equals("getPAg")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String t = request.getParameter("categoriaid");
+            String id = request.getParameter("id");
+            int categoriaid = Integer.parseInt(t);
+            ArrayList pistas = createHandler.getPistasC(categoriaid);
+            for (int i = 0; i < pistas.size(); i++) {
+                Pista aux = (Pista) pistas.get(i);
+                out.print("\t\t\t\t<tr>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-redaccion-" + aux.getId() + "\">" + aux.getRedaccion() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-respuesta-" + aux.getId() + "\">" + aux.getRespuesta() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-puntos-" + aux.getId() + "\">" + aux.getPuntos() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td id=\"Pista-categoriaid-" + aux.getId() + "\">" + aux.getCategoria().getNombre() + "</a></td>\n");
+                out.print("\t\t\t\t\t<td><input name=\"seccion-"+ id + "\" type =\"checkbox\" value=\"" + aux.getId() + "\" multiple onclick=\"cuenta" + id + "(this)\"></td>\n");
+                out.print("\t\t\t\t</tr>\n");
+            }
+        } else if (operation.equals("getCAg")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String t = request.getParameter("temaid");
+            int temaid = Integer.parseInt(t);
+            ArrayList categorias = createHandler.getCategorias(temaid);
+            for (int i = 0; i < categorias.size(); i++) {
+                Categoria aux = (Categoria) categorias.get(i);
+                out.print("<option class=\"categoriaOption\" value=\"" + aux.getId() + "\">" + aux.getNombre() + " - " + aux.getTema().getTema() + "</option>");
             }
         }
     }

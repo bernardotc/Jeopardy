@@ -55,7 +55,7 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus input[typ
     padding: .5em .5em .5em .5em;
     border-radius: 3px;
     overflow: hidden;
-    background: #88CCCC url("http://www.javascriptsource.com/css/arrowd.gif") no-repeat 98% 50%;
+    background: #6AE3E3 url("http://www.javascriptsource.com/css/arrowd.gif") no-repeat 98% 50%;
 }
 
 .select-style select {
