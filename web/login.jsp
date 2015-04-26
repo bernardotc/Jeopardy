@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header2.html" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,6 +41,21 @@
             }
 
         </style>
+    <script>
+        window.onload = function error() {
+            errorM = document.getElementById("errorLogin");
+            if (errorM != null) {
+                alert(errorM.innerHTML);
+                if (errorM.innerHTML == 3) {
+                    document.getElementById("login").style.visibility = "hidden";
+                    setTimeout(function () {
+                        document.getElementById("error").innerHTML="";
+                document.getElementById("login").style.visibility = "visible";
+            }, 60000);
+                }
+            }
+        }
+    </script>
     </head>
     <body>
         <fieldset>
@@ -51,6 +66,7 @@
                     Contraseña <br><input type="password" name="userpswd" required><br>
                     <center><input type="submit" value="Iniciar"></center>
                 </form>
+                <p id="error">${errorLogin}</p>
             </div>
 
             <div id="signin">
@@ -64,6 +80,7 @@
                 </form>
             </div>
         </fieldset>
+            <p id="errorLogin" hidden>${contador}</p>
     </body>
 </html>
 <%@include file="footer.html" %>

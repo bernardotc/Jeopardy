@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header2.html" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,9 +55,9 @@
     </head>
     <body>
         <h3>Confirmar cuenta</h3>
-        <form name="confirmationForm">
-            Usuario <br><span></span><br>
-            Contraseña recibida <br><input type="password" name="lPasw" required><br>
+        <form name="confirmationForm" action="control?do=changePass" method="post">
+            Usuario <br><input type="text" name="user" value="${user.getUsuario()}"></input><br>
+            Contraseña recibida <br><input type="password" name="lPaswd" required><br>
             Nueva contraseña <br><input type="password" name="nPaswd" required><br>
             Confirmar contraseña <br><input type="password" name="cNPaswd" required onchange="samePasswords()">
             <div id="confirmaContra">
@@ -65,6 +65,7 @@
             <center><input type="submit" value="Confirmar"></center>
         </form>
         <img src="https://mrvaudrey.files.wordpress.com/2011/09/jeopardy_220x220.jpg">
+        <p>${errorChangePass}</p>
     </body>
 </html>
 <%@include file="footer.html" %>

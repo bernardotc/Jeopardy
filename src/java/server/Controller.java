@@ -35,7 +35,7 @@ public class Controller extends HttpServlet {
         String operation = (String) request.getParameter("do");
         String url = "/confirmation.jsp";
         
-        if (operation.equals("login") || operation.equals("signin")) {
+        if (operation.equals("login") || operation.equals("signin") || operation.equals("confirm") || operation.equals("changePass") || operation.equals("sendMail")) {
             url = "/login-signin";
         } else if (operation.equals("create") || operation.equals("insertTema") || operation.equals("insertCategoria") ||
                 operation.equals("insertPista") || operation.equals("showT") || operation.equals("showC") || operation.equals("showP") ||

@@ -12,6 +12,10 @@ var cunta4 = 5;
 var cunta5 = 5;
 var cunta6 = 5;
 
+function recargar() {
+    location.reload();
+}
+
 function getRequestObject() {
     if (window.ActiveXObject) {
         return(new ActiveXObject("Microsoft.XMLHTTP"));

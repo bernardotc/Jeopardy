@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header2.html" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,10 +48,10 @@
         <h3>Sea tan amable de esperar unos minutos para confirmar su cuenta.</h3>
         <h5>En caso de que no llegue un correo, se puede enviar otra vez:</h5>
         <fieldset>
-            <form id="enviarCorreo">
+            <form id="enviarCorreo" action="control?do=sendMail" method="post">
                 <input type="submit" value="Enviar correo nuevamente">
             </form>
-            <form id="regresarInicio">
+            <form id="regresarInicio" action="login.jsp" method="post">
                 <input type="submit" value="Regresar a inicio de sesión">
             </form>
         </fieldset>

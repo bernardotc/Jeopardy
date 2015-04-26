@@ -16,14 +16,16 @@
     </head>
     <body>
         <h3>Selecciona el que quieres modificar</h3>
-        <br>
+        <p>A continuación se te presentan tus perfiles creados hasta el momento. Si quieres modificar alguno, dale click al nombre. Por el contrario, si quieres borrarlo, presiona el botón de borrar.</p>
+        <ul>
         <%
             ArrayList perfiles = (ArrayList) request.getAttribute("perfiles");
             for (int x = 0; x < perfiles.size(); x++) {
                 PerfilJuego aux = (PerfilJuego) perfiles.get(x);
-            out.print("<a href=\"control?do=changeProf&id=" + aux.getId() + "\">" + aux.getName() + "</a>\n");
+            out.print("<li><a style=\"margin-right: 30px;\" href=\"control?do=changeProf&id=" + aux.getId() + "\">" + aux.getName() + "</a><input class=\"specialButton\" type=\"button\" value=\"Borrar perfil\"></li><br>\n");
         }
             %>
+        </ul>
     </body>
 </html>
 <%@include file="footer.html" %>

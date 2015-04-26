@@ -30,7 +30,8 @@
             }
 
             #titulo {
-                color: darkmagenta;
+                font-family: 'Open Sans', sans-serif;
+                color: #77AAAA;
                 text-align: center;
             }
 

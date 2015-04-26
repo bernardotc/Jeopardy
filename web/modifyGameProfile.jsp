@@ -20,6 +20,7 @@
         <title>Modifica un perfil de juego Jeopardy</title>
     </head>
     <body>
+        <h3>Modifica tu perfil</h3>
     <center>
         <p style="width: 95%">Selecciona los 6 temas que usarás en el juego. Luego la categoría y marca las 5 pistas a usar de la lista.</p>
         <form name="perfil" style="width: 100%;" action="control?do=modifyProf" onsubmit="return (checarPistasCompleto());" method="post">
@@ -630,7 +631,7 @@
             </fieldset>
             <br>
             <input type="submit" value="Guardar perfil">
-            <input type="reset" value="Cancelar">
+            <input style="margin-left: 40px;" type="button" value="Cancelar" onclick="recargar()">
         </form>
         <br>
     </center>
