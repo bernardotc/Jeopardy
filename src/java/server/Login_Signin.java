@@ -56,14 +56,14 @@ public class Login_Signin extends HttpServlet {
             String ape = (String) request.getParameter("newLName");
             String correo = (String) request.getParameter("newMail");
             pass += "$#";
-              
+
             uHandler.newUser(nom, user, ape, correo, pass);
-            
+
             usuario = uHandler.getUser(user, pass);
-            
+
             HttpSession session = request.getSession();
             session.setAttribute("user", usuario);
-            
+
             sendMail(nom, ape, correo, user, pass, usuario.getId());
 
             url = "/emailConfirmation.jsp";
@@ -71,10 +71,10 @@ public class Login_Signin extends HttpServlet {
             String i = (String) request.getParameter("id");
             int id = Integer.parseInt(i);
             usuario = uHandler.getUser(id);
-            
+
             HttpSession session = request.getSession();
             session.setAttribute("user", usuario);
-            
+
             if (usuario != null) {
                 url = "/login.jsp";
             }
@@ -85,11 +85,11 @@ public class Login_Signin extends HttpServlet {
             String lastP = (String) request.getParameter("lPaswd");
             String nPass = (String) request.getParameter("nPaswd");
             String cNPass = (String) request.getParameter("cNPaswd");
-            
+
             usuario = uHandler.getUser(user, lastP);
-            
+
             boolean cambiarPass = uHandler.updatePassword(usuario.getId(), nPass);
-            if(!cambiarPass) {
+            if (!cambiarPass) {
                 request.setAttribute("errorChangePass", "Error en el sistema al intentar cambiar contraseñas.");
                 url = "/confirmation.jsp";
             } else {
@@ -101,8 +101,12 @@ public class Login_Signin extends HttpServlet {
         } else if (operation.equals("sendMail")) {
             HttpSession session = request.getSession();
             usuario = (User) session.getAttribute("user");
-            
-            sendMail(usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getUsuario(), usuario.getPassword(), usuario.getId());
+            if (usuario == null) {
+                url = "/login.jsp";
+            } else {
+
+                sendMail(usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getUsuario(), usuario.getPassword(), usuario.getId());
+            }
         } else {
             String user = (String) request.getParameter("userid");
             String password = (String) request.getParameter("userpswd");
@@ -118,6 +122,8 @@ public class Login_Signin extends HttpServlet {
 
                 if (session.getAttribute("contador") != null) {
                     intentosLogin = (int) session.getAttribute("contador");
+                } else {
+                    url = "/login.jsp";
                 }
                 if (usuario != null) {
                     url = "/menu.jsp";
@@ -138,7 +144,7 @@ public class Login_Signin extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
-    
+
     public void sendMail(String nom, String ape, String correo, String user, String pass, int id) {
         final String username = "etherniajeopardy";
         final String password = "etherniaJeo";
@@ -150,25 +156,25 @@ public class Login_Signin extends HttpServlet {
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
-          new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-          });
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
 
         try {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("etherniajeopardy@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-            InternetAddress.parse(correo));
+                    InternetAddress.parse(correo));
             message.setSubject("Te has registrado al Sistema de Jeopardy");
             message.setText("Dear " + nom + " " + ape + ","
-                + "\n\n Este mensaje es para decirle que ya está registrado en el sistema." +
-                    "\n Para acceder a el tendrá que dar click al link para cambiar su contraseña usando su contraseña temporal dada a continuación:" +
-                    "\n\n Usuario: " + user + "\n Contraseña: " + pass +
-                    "\n\n Link: http://127.0.0.1:8080/Jeopardy/control?do=confirm&id=" + id +
-                    "\n\n Gracias por su atención." + "\n Ethernia Company.");
+                    + "\n\n Este mensaje es para decirle que ya está registrado en el sistema."
+                    + "\n Para acceder a el tendrá que dar click al link para cambiar su contraseña usando su contraseña temporal dada a continuación:"
+                    + "\n\n Usuario: " + user + "\n Contraseña: " + pass
+                    + "\n\n Link: http://127.0.0.1:8080/Jeopardy/control?do=confirm&id=" + id
+                    + "\n\n Gracias por su atención." + "\n Ethernia Company.");
 
             Transport.send(message);
 
@@ -178,7 +184,7 @@ public class Login_Signin extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

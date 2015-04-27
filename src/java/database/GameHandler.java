@@ -6,8 +6,11 @@
 package database;
 
 import beans.Categoria;
+import beans.Juego;
+import beans.Jugador;
 import beans.PerfilJuego;
 import beans.Pista;
+import beans.JugadorResultado;
 import beans.Tema;
 import beans.User;
 import java.sql.Connection;
@@ -15,6 +18,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -155,4 +159,139 @@ public class GameHandler {
             return false;
         }
     }
+    
+    public Jugador getJugador(String nom) {
+        Jugador j = new Jugador();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Jugador WHERE nombre='" + nom + "'");
+            while (results.next()) {
+                int id = results.getInt("id");
+                String name = results.getString("nombre");
+                j = new Jugador(id, name);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return j;
+    }
+    
+        public Jugador getJugador(int jid) {
+        Jugador j = new Jugador();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Jugador WHERE id=" + jid);
+            while (results.next()) {
+                int id = results.getInt("id");
+                String name = results.getString("nombre");
+                j = new Jugador(id, name);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return j;
+    }
+    
+    public Jugador insertJugador(String nombre) {
+        try {
+            Statement statement = connection.createStatement();
+            String query = "INSERT INTO Jugador (nombre) values ('" + nombre + "')";
+            statement.executeUpdate(query);
+            statement.close();
+            return getJugador(nombre);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public Juego getJuego(int perfilId) {
+        Juego j = new Juego();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Juego WHERE id='" + perfilId + "'");
+            while (results.next()) {
+                int id = results.getInt("id");
+                Timestamp date = results.getTimestamp("fecha");
+                int perfilJuegoId = results.getInt("perfiljuegoid");
+                j = new Juego(id, date, perfilJuegoId);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return j;
+    }
+    
+    public Juego insertJuego(int id) {
+        try {
+            int juegoId = 0;
+            Statement statement = connection.createStatement();
+            String query = "INSERT INTO Juego (fecha, perfiljuegoid) values (NOW(), '" + id + "')";
+            statement.executeUpdate(query);
+            query = "SELECT last_insert_id() as lastId FROM Juego";
+            ResultSet results = statement.executeQuery(query);
+            while (results.next()) {
+                juegoId = results.getInt("lastId");
+            }
+            statement.close();
+            return getJuego(juegoId);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public boolean insertResultado(int juegoId, int jugadorId, int pistaId) {
+        try {
+            Statement statement = connection.createStatement();
+            String query = "INSERT INTO Resultado (juegoid, jugadorid, pistaid) values ('" + juegoId + "', '" + jugadorId + "', '" + pistaId + "')";
+            statement.executeUpdate(query);
+            statement.close();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public ArrayList getResultados(int juegoId) {
+        ArrayList resultados = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT Jugador.nombre, SUM(Pista.puntos) AS points FROM Juego INNER JOIN Resultado ON Juego.id=Resultado.juegoid INNER JOIN Jugador ON Resultado.jugadorid=Jugador.id INNER JOIN Pista ON Pista.id=Resultado.pistaid WHERE Juego.id=" 
+                    + juegoId + " GROUP BY Jugador.nombre");
+            while (results.next()) {
+                String nombre = results.getString("nombre");
+                int points = results.getInt("points");
+                JugadorResultado aux = new JugadorResultado(nombre, points);
+                resultados.add(aux);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultados;
+    }
+    
+    public ArrayList getConcentradoFinal(int usuarioId) {
+        ArrayList resultados = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT Jugador.nombre, SUM(Pista.puntos) AS points FROM Usuario INNER JOIN PerfilJuego ON Usuario.id=PerfilJuego.usuarioid INNER JOIN Juego ON Juego.perfiljuegoid=PerfilJuego.id INNER JOIN Resultado ON Juego.id=Resultado.juegoid INNER JOIN Jugador ON Resultado.jugadorid=Jugador.id INNER JOIN Pista ON Pista.id=Resultado.pistaid WHERE Usuario.id=" +
+                    usuarioId + " GROUP BY Jugador.nombre");
+            while (results.next()) {
+                String nombre = results.getString("nombre");
+                int points = results.getInt("points");
+                JugadorResultado aux = new JugadorResultado(nombre, points);
+                resultados.add(aux);
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultados;
+    } 
 }

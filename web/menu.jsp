@@ -14,6 +14,8 @@
     </head>
     <body>
         <h3>¡Escoge con lo que te quieras divertir!</h3>
+        <a href="control?do=showGame">Comenzar un juego</a><br>
+        <a href="control?do=finalList">Ver concentrado final de puntos</a><br>
         <a href="control?do=prepareG">Crear un perfil de Jeopardy</a><br>
         <a href="control?do=create">Crear temas, categorías y pistas</a><br>
         <a href="control?do=showT">Mostrar todos los temas</a><br>

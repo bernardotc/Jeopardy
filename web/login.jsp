@@ -45,7 +45,6 @@
         window.onload = function error() {
             errorM = document.getElementById("errorLogin");
             if (errorM != null) {
-                alert(errorM.innerHTML);
                 if (errorM.innerHTML == 3) {
                     document.getElementById("login").style.visibility = "hidden";
                     setTimeout(function () {

@@ -150,6 +150,32 @@ public class TemaCategoriaPistaHandler {
         return pistas;
     }
     
+    public Pista getPista(int id) {
+        Pista pista = new Pista();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM Pista INNER JOIN Categoria ON Pista.categoriaid = Categoria.id INNER JOIN Tema ON Categoria.temaid = Tema.id WHERE Pista.id=" + id + " ORDER BY Pista.puntos ASC");
+            while (results.next()) {
+                String redaccion=results.getString("redaccion");
+                String respuesta=results.getString("respuesta");
+                int puntos=results.getInt("puntos");
+                int categoriaid=results.getInt("categoriaid");
+                String nombre=results.getString("nombre");
+                String descripcion=results.getString("descripcion");
+                String tema=results.getString("tema");
+                int temaid=results.getInt("temaid");
+                Tema t = new Tema(temaid, tema);
+                Categoria c = new Categoria(categoriaid, nombre, descripcion, t);
+                Pista p = new Pista(id, redaccion, respuesta, puntos, c);
+                pista = p;
+            }
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pista;
+    }
+    
     public ArrayList getPistasC(int categorid) {
         ArrayList pistas = new ArrayList();
         try {
