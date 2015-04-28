@@ -42,6 +42,10 @@ public class Data extends HttpServlet {
         TemaCategoriaPistaHandler createHandler = new TemaCategoriaPistaHandler();
         String url = "/crearTemaCategoriaPista.jsp";
 
+        if (request.getSession().getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+        }
+        
         if (operation.equals("create")) {
             ArrayList temas = createHandler.getTemas();
             ArrayList categorias = createHandler.getCategorias();
@@ -77,7 +81,7 @@ public class Data extends HttpServlet {
                 ArrayList categorias = createHandler.getCategorias();
                 for (int i = 0; i < categorias.size(); i++) {
                     Categoria aux = (Categoria) categorias.get(i);
-                    out.print("<option value=\"" + aux.getId() + "\">" + aux.getNombre() + "</option>");
+                    out.print("<option value=\"" + aux.getId() + "\">" + aux.getNombre() + " - " + aux.getTema().getTema() + "</option>");
                 }
             }
         } else if (operation.equals("insertPista")) {

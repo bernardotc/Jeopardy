@@ -7,7 +7,7 @@
 <%@page import="beans.Tema"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>

@@ -7,7 +7,7 @@
 <%@page import="beans.Tema"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,9 +20,6 @@
                 border-bottom: 1px solid #99BBBB;
             }
         </style>
-    <header>
-        ${user.getNombre()}
-    </header>
     <body>
         <h3>¡Casi listo para jugar!</h3>
     <center>

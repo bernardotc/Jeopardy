@@ -103,3 +103,12 @@ thead td {
     background-image: linear-gradient(to bottom, #2aa4bf, #42c7af);
     text-decoration: none;
 }
+
+a {
+                text-decoration: none;
+                color: #4499FF;
+            }
+            
+            a:hover {
+                color: #4433AA;
+            }

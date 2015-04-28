@@ -1,6 +1,6 @@
 <%-- 
-    Document   : gameResults
-    Created on : Apr 27, 2015, 3:49:51 PM
+    Document   : concentrado
+    Created on : Apr 27, 2015, 10:21:37 PM
     Author     : bernardot
 --%>
 
@@ -21,7 +21,7 @@
         </style>
     </head>
     <body>
-        <h3>Resultados</h3>
+        <h3>Concentrado de todos los juegos</h3>
     <center>
         <table>
             <thead>

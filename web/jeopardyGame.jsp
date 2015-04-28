@@ -9,7 +9,7 @@
 <%@page import="beans.PerfilJuego"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,6 +26,7 @@
                 selects = document.getElementsByTagName("select");
                 for (x = 0; x < selects.length; x++) {
                     if(selects[x].value == -1) {
+                        alert("Hay pistas sin contestar.");
                         return false
                     } 
                 }
@@ -61,11 +62,30 @@
                     <%
                         PerfilJuego perfil = (PerfilJuego) session.getAttribute("perfil");
                         ArrayList jugadores = (ArrayList) session.getAttribute("jugadores");
-                        for (int x = 0; x < 6; x++) {
-                            ArrayList auxList = perfil.getSeccion1();
-                            Pista aux = (Pista) auxList.get(0);
-                            out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
-                        }%>
+                        ArrayList auxList = perfil.getSeccion1();
+                        Pista aux = (Pista) auxList.get(0);
+                        out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
+                        
+                        auxList = perfil.getSeccion2();
+                        aux = (Pista) auxList.get(0);
+                        out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
+                        
+                        auxList = perfil.getSeccion3();
+                        aux = (Pista) auxList.get(0);
+                        out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
+                        
+                        auxList = perfil.getSeccion4();
+                        aux = (Pista) auxList.get(0);
+                        out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
+                        
+                        auxList = perfil.getSeccion5();
+                        aux = (Pista) auxList.get(0);
+                        out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
+                        
+                        auxList = perfil.getSeccion6();
+                        aux = (Pista) auxList.get(0);
+                        out.print("<td>" + aux.getCategoria().getNombre() + "</td>\n");
+                        %>
                 </thead>
                 <tbody>
                     <%
@@ -84,7 +104,7 @@
                             out.print("<input type=\"button\" onclick=\"mostrar('Pista: " + aux1.getRedaccion() + "', 'Respuesta: " + aux1.getRespuesta() + "');\" value=\"" + aux1.getPuntos() + "\"><br>\n");
                             out.print("¿Quién la obtuvo bien?");
                             out.print("<div class=\"select-style\">\n");
-                            out.print("<select name=\"" + 1 * (y+1) + "\">\n");
+                            out.print("<select name=\"" + (y+1) + "\">\n");
                             out.print("<option value=\"-1\">Jugador</option>\n");
                             for (int x = 0; x < jugadores.size(); x++) {
                                 Jugador jug = (Jugador) jugadores.get(x);
@@ -99,7 +119,7 @@
                             out.print("<input type=\"button\" onclick=\"mostrar('Pista: " + aux2.getRedaccion() + "', 'Respuesta: " + aux2.getRespuesta() + "');\" value=\"" + aux2.getPuntos() + "\"><br>\n");
                             out.print("¿Quién la obtuvo bien?");
                             out.print("<div class=\"select-style\">\n");
-                            out.print("<select name=\"" + 2 * (y+1) + "\">\n");
+                            out.print("<select name=\"" + (y+6) + "\">\n");
                             out.print("<option value=\"-1\">Jugador</option>\n");
                             for (int x = 0; x < jugadores.size(); x++) {
                                 Jugador jug = (Jugador) jugadores.get(x);
@@ -114,7 +134,7 @@
                             out.print("<input type=\"button\" onclick=\"mostrar('Pista: " + aux3.getRedaccion() + "', 'Respuesta: " + aux3.getRespuesta() + "');\" value=\"" + aux3.getPuntos() + "\"><br>\n");
                             out.print("¿Quién la obtuvo bien?");
                             out.print("<div class=\"select-style\">\n");
-                            out.print("<select name=\"" + 3 * (y+1) + "\">\n");
+                            out.print("<select name=\"" + (y+11) + "\">\n");
                             out.print("<option value=\"-1\">Jugador</option>\n");
                             for (int x = 0; x < jugadores.size(); x++) {
                                 Jugador jug = (Jugador) jugadores.get(x);
@@ -129,7 +149,7 @@
                             out.print("<input type=\"button\" onclick=\"mostrar('Pista: " + aux4.getRedaccion() + "', 'Respuesta: " + aux4.getRespuesta() + "');\" value=\"" + aux4.getPuntos() + "\"><br>\n");
                             out.print("¿Quién la obtuvo bien?");
                             out.print("<div class=\"select-style\">\n");
-                            out.print("<select name=\"" + 4 * (y+1) + "\">\n");
+                            out.print("<select name=\"" + (y+16) + "\">\n");
                             out.print("<option value=\"-1\">Jugador</option>\n");
                             for (int x = 0; x < jugadores.size(); x++) {
                                 Jugador jug = (Jugador) jugadores.get(x);
@@ -144,7 +164,7 @@
                             out.print("<input type=\"button\" onclick=\"mostrar('Pista: " + aux5.getRedaccion() + "', 'Respuesta: " + aux5.getRespuesta() + "');\" value=\"" + aux5.getPuntos() + "\"><br>\n");
                             out.print("¿Quién la obtuvo bien?");
                             out.print("<div class=\"select-style\">\n");
-                            out.print("<select name=\"" + 5 * (y+1) + "\">\n");
+                            out.print("<select name=\"" + (y+21) + "\">\n");
                             out.print("<option value=\"-1\">Jugador</option>\n");
                             for (int x = 0; x < jugadores.size(); x++) {
                                 Jugador jug = (Jugador) jugadores.get(x);
@@ -159,7 +179,7 @@
                             out.print("<input type=\"button\" onclick=\"mostrar('Pista: " + aux6.getRedaccion() + "', 'Respuesta: " + aux6.getRespuesta() + "');\" value=\"" + aux6.getPuntos() + "\"><br>\n");
                             out.print("¿Quién la obtuvo bien?");
                             out.print("<div class=\"select-style\">\n");
-                            out.print("<select name=\"" + 6 * (y+1) + "\">\n");
+                            out.print("<select name=\"" + (y+26) + "\">\n");
                             out.print("<option value=\"-1\">Jugador</option>\n");
                             for (int x = 0; x < jugadores.size(); x++) {
                                 Jugador jug = (Jugador) jugadores.get(x);

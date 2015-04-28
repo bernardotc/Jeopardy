@@ -1,9 +1,11 @@
+<%-- 
+    Document   : header
+    Created on : Apr 27, 2015, 8:52:05 PM
+    Author     : bernardot
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Juego de Jeopardy</title>
@@ -40,9 +42,11 @@ and open the template in the editor.
     </head>
     <header>
         <h1>El Juego de Jeopardy</h1>
+        ${user.getNombre()}
         <ul id="header">
             <li><a href="menu.jsp">Menu</a></li>
-            <li><a href="login.jsp">Salir</a></li>
+            <li><a href="control?do=salir">Salir</a></li>
         </ul>
     </header>
 </html>
+

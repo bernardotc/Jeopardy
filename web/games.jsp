@@ -7,7 +7,7 @@
 <%@page import="beans.PerfilJuego"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.html" %>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,8 +15,9 @@
         <title>Todos tus perfiles de Juego Jeopardy</title>
     </head>
     <body>
-        <h3>Selecciona el que quieres modificar</h3>
-        <p>A continuación se te presentan tus perfiles creados hasta el momento. Dale click al nombre de alguno para jugarlo.</p>
+        <h3>Selecciona el que quieres jugar</h3>
+        <center>
+            <p style="width:90%;">A continuación se te presentan tus perfiles creados hasta el momento. Dale click al nombre de alguno para jugarlo.</p>
         <ul>
         <%
             ArrayList perfiles = (ArrayList) request.getAttribute("perfiles");
@@ -26,6 +27,8 @@
         }
             %>
         </ul>
+        <a href="control?do=prepareG">O crea un perfil de Jeopardy</a><br>
+        </center>
     </body>
 </html>
 <%@include file="footer.html" %>

@@ -63,6 +63,7 @@ public class Login_Signin extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("user", usuario);
+            session.setAttribute("contador", 0);
 
             sendMail(nom, ape, correo, user, pass, usuario.getId());
 
@@ -107,6 +108,11 @@ public class Login_Signin extends HttpServlet {
 
                 sendMail(usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getUsuario(), usuario.getPassword(), usuario.getId());
             }
+        } else if (operation.equals("salir")) {
+            HttpSession session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("login.jsp");
+            return;
         } else {
             String user = (String) request.getParameter("userid");
             String password = (String) request.getParameter("userpswd");
@@ -118,13 +124,14 @@ public class Login_Signin extends HttpServlet {
 
             if (password.endsWith("$#")) {
                 url = "/emailConfirmation.jsp";
+                intentosLogin = 0;
+                session.setAttribute("contador", intentosLogin);
             } else {
 
                 if (session.getAttribute("contador") != null) {
                     intentosLogin = (int) session.getAttribute("contador");
-                } else {
-                    url = "/login.jsp";
                 }
+                
                 if (usuario != null) {
                     url = "/menu.jsp";
                     intentosLogin = 0;
@@ -133,10 +140,10 @@ public class Login_Signin extends HttpServlet {
                     intentosLogin++;
                     request.setAttribute("errorLogin", "Usuario o contraseña equivocada. Tienes " + (3 - intentosLogin)
                             + " intentos. Sino se bloqueará la cuenta por 1 minuto.");
-                    session.setAttribute("contador", intentosLogin);
                     if (intentosLogin == 3) {
                         intentosLogin = 0;
                     }
+                    session.setAttribute("contador", intentosLogin);
                 }
             }
         }
@@ -146,7 +153,7 @@ public class Login_Signin extends HttpServlet {
     }
 
     /**
-     * Método auxiliar que manda un mail la usuario.
+     * Método auxiliar que manda un mail la usuario
      * @param nom
      * @param ape
      * @param correo
@@ -178,7 +185,7 @@ public class Login_Signin extends HttpServlet {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(correo));
             message.setSubject("Te has registrado al Sistema de Jeopardy");
-            message.setText("Dear " + nom + " " + ape + ","
+            message.setText("Querido " + nom + " " + ape + ","
                     + "\n\n Este mensaje es para decirle que ya está registrado en el sistema."
                     + "\n Para acceder a el tendrá que dar click al link para cambiar su contraseña usando su contraseña temporal dada a continuación:"
                     + "\n\n Usuario: " + user + "\n Contraseña: " + pass

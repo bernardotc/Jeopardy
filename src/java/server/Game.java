@@ -47,6 +47,10 @@ public class Game extends HttpServlet {
         GameHandler gameHandler = new GameHandler();
         String url = "/gameProfile.jsp";
 
+        if (request.getSession().getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+        }
+        
         if (operation.equals("prepareG")) {
             ArrayList temas = createHandler.getTemas();
             request.setAttribute("listaTemas", temas);
@@ -321,7 +325,8 @@ public class Game extends HttpServlet {
                 Juego juego = gameHandler.insertJuego(perfil.getId());
 
                 for (int x = 1; x <= 30; x++) {
-                    String valor = request.getParameter("x");
+                    String xa = Integer.toString(x);
+                    String valor = request.getParameter(xa);
                     String[] aux = valor.split("-");
                     String jugadorid = aux[0];
                     int jugid = Integer.parseInt(jugadorid);
@@ -349,7 +354,7 @@ public class Game extends HttpServlet {
 
                 request.setAttribute("resultados", resultados);
 
-                url = "/gameResults.jsp";
+                url = "/concentrado.jsp";
             }
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);

@@ -347,7 +347,7 @@ public class GameHandler {
         try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT Jugador.nombre, SUM(Pista.puntos) AS points FROM Juego INNER JOIN Resultado ON Juego.id=Resultado.juegoid INNER JOIN Jugador ON Resultado.jugadorid=Jugador.id INNER JOIN Pista ON Pista.id=Resultado.pistaid WHERE Juego.id=" 
-                    + juegoId + " GROUP BY Jugador.nombre");
+                    + juegoId + " GROUP BY Jugador.nombre ORDER BY points DESC");
             while (results.next()) {
                 String nombre = results.getString("nombre");
                 int points = results.getInt("points");
@@ -371,7 +371,7 @@ public class GameHandler {
         try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT Jugador.nombre, SUM(Pista.puntos) AS points FROM Usuario INNER JOIN PerfilJuego ON Usuario.id=PerfilJuego.usuarioid INNER JOIN Juego ON Juego.perfiljuegoid=PerfilJuego.id INNER JOIN Resultado ON Juego.id=Resultado.juegoid INNER JOIN Jugador ON Resultado.jugadorid=Jugador.id INNER JOIN Pista ON Pista.id=Resultado.pistaid WHERE Usuario.id=" +
-                    usuarioId + " GROUP BY Jugador.nombre");
+                    usuarioId + " GROUP BY Jugador.nombre ORDER BY points DESC");
             while (results.next()) {
                 String nombre = results.getString("nombre");
                 int points = results.getInt("points");

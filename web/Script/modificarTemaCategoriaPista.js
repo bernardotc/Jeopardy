@@ -75,8 +75,8 @@ function modificar(obj)
 
 
     //Asignar en la caja el valor de la casilla
-    if (obj.innerText)
-        input.value = obj.innerText;
+    if (obj.innerHTML)
+        input.value = obj.innerHTML;
     else
         input.value = obj.textContent;
     input.value = trim(input.value);
@@ -131,7 +131,7 @@ function handleResponseModT() {
         input = document.createElement("select");
         input.innerHTML = request.responseText;
         for (x = 0; x < input.options.length; x++) {
-            if (input.options[x].innerText == objeto.innerText) {
+            if (input.options[x].innerHTML == objeto.innerHTML) {
                 input.options.selectedIndex = x;
                 break;
             }
@@ -144,18 +144,10 @@ function handleResponseModT() {
         {
             var x = input.selectedIndex;
             var valor = document.getElementsByTagName("option")[x].value;
-            var texto = document.getElementsByTagName("option")[x].innerText;
+            var texto = document.getElementsByTagName("option")[x].innerHTML;
             salvarModT(objeto, valor, id, tipo, DB, texto);
             delete input;
         };
-
-        /*setTimeout(function () {
-         var x = input.selectedIndex;
-         var valor = document.getElementsByTagName("option")[x].value;
-         var texto = document.getElementsByTagName("option")[x].innerText;
-         salvarModT(objeto, valor, id, tipo, DB, texto);
-         delete input;
-         }, 10000);*/
     }
 }
 
@@ -179,7 +171,7 @@ function handleResponseModC() {
         input = document.createElement("select");
         input.innerHTML = request.responseText;
         for (x = 0; x < input.options.length; x++) {
-            if (input.options[x].innerText.split(" - ")[0] == objeto.innerText) {
+            if (input.options[x].innerHTML.split(" - ")[0] == objeto.innerHTML) {
                 input.options.selectedIndex = x;
                 break;
             }
@@ -192,7 +184,7 @@ function handleResponseModC() {
         {
             var x = input.selectedIndex;
             var valor = document.getElementsByClassName("categoriaOption")[x].value;
-            var t = document.getElementsByClassName("categoriaOption")[x].innerText.split(" - ");
+            var t = document.getElementsByClassName("categoriaOption")[x].innerHTML.split(" - ");
             var texto = t[0];
             salvarModC(objeto, valor, id, tipo, DB, texto, t[1]);
             delete input;
@@ -218,7 +210,7 @@ function salvarModC(obj, valor, id, tipo, DB, texto, t)
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.send("id=" + id + "&tipo=" + tipo + "&valor=" + valor + "&db=" + DB);
     i = document.getElementById("temas").selectedIndex;
-    tema = document.getElementsByTagName("option")[i].innerText;
+    tema = document.getElementsByTagName("option")[i].innerHTML;
     if (t == tema) {
         obj.replaceChild(document.createTextNode(texto), obj.firstChild);
     } else {
