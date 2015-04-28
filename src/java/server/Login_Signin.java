@@ -145,6 +145,15 @@ public class Login_Signin extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Método auxiliar que manda un mail la usuario.
+     * @param nom
+     * @param ape
+     * @param correo
+     * @param user
+     * @param pass
+     * @param id
+     */
     public void sendMail(String nom, String ape, String correo, String user, String pass, int id) {
         final String username = "etherniajeopardy";
         final String password = "etherniaJeo";

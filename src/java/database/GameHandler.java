@@ -31,6 +31,9 @@ public class GameHandler {
 
     private static Connection connection;
 
+    /**
+     * Método constructor sin parámetros. Las funciones van acceder a la Base de datos.
+     */
     public GameHandler() {
         try {
 
@@ -41,6 +44,12 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Inserta un PerfilJuego en la base de datos
+     * @param nombre
+     * @param userid
+     * @return boolean true o false
+     */
     public boolean newPerfilJuego(String nombre, int userid) {
         try {
             Statement statement = connection.createStatement();
@@ -54,6 +63,14 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Inserta contenido en la tabla PistaPerfilJuego de la base de datos.
+     * @param pid
+     * @param pjid
+     * @param seccion
+     * @param lugar
+     * @return boolean true o false
+     */
     public boolean insertPistaInPerfilJuego(String pid, String pjid, String seccion, int lugar) {
         try {
             Statement statement = connection.createStatement();
@@ -67,6 +84,11 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Obtiene los Perfiles de juegos en base a un usuario.
+     * @param usuario
+     * @return ArrayList perfiljuegos
+     */
     public ArrayList getPerfilJuegos(User usuario) {
         ArrayList perfiljuegos = new ArrayList();
         try {
@@ -86,6 +108,12 @@ public class GameHandler {
         return perfiljuegos;
     }
 
+    /**
+     * Obtiene el Perfil de Juego en base al usuario y el id del Perfil.
+     * @param usuario
+     * @param i
+     * @return PerfilJuego pj
+     */
     public PerfilJuego getPerfilJuegos(User usuario, int i) {
         PerfilJuego pj = new PerfilJuego();
         try {
@@ -103,6 +131,12 @@ public class GameHandler {
         return pj;
     }
 
+    /**
+     * Obtiene las Pistas en base a un id de un Perfil de Juego y una seccion
+     * @param pjid
+     * @param seccion
+     * @return ArrayList pistas
+     */
     public ArrayList getPistasPerfilJuegos(int pjid, int seccion) {
         ArrayList pistas = new ArrayList();
         try {
@@ -130,6 +164,12 @@ public class GameHandler {
         return pistas;
     }
 
+    /**
+     * Modifica el Perfil de juego
+     * @param id
+     * @param name
+     * @return boolean true or false
+     */
     public boolean updatePerfilJuego(int id, String name) {
         try {
             Statement statement = connection.createStatement();
@@ -143,6 +183,14 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Modifica las Pistas de un perfil de Juego
+     * @param pid
+     * @param pjid
+     * @param seccion
+     * @param lugar
+     * @return boolean true or false.
+     */
     public boolean updatePistaPerfilJuego(int pid, int pjid, int seccion, int lugar) {
         try {
             Statement statement = connection.createStatement();
@@ -160,6 +208,11 @@ public class GameHandler {
         }
     }
     
+    /**
+     * Obteien un jugador en base a su nombre.
+     * @param nom
+     * @return Jugador j
+     */
     public Jugador getJugador(String nom) {
         Jugador j = new Jugador();
         try {
@@ -177,7 +230,12 @@ public class GameHandler {
         return j;
     }
     
-        public Jugador getJugador(int jid) {
+    /**
+     * Obtiene un jugador de la base de datos en base a su id.
+     * @param jid
+     * @return Jugador j.
+     */
+    public Jugador getJugador(int jid) {
         Jugador j = new Jugador();
         try {
             Statement statement = connection.createStatement();
@@ -194,6 +252,11 @@ public class GameHandler {
         return j;
     }
     
+    /**
+     * Inserta un jugador en la base de datos  y luego lo regresa.
+     * @param nombre
+     * @return Jugador
+     */
     public Jugador insertJugador(String nombre) {
         try {
             Statement statement = connection.createStatement();
@@ -207,11 +270,16 @@ public class GameHandler {
         }
     }
     
-    public Juego getJuego(int perfilId) {
+    /**
+     * Obtiene un juego en base a su id
+     * @param Id
+     * @return Juego j
+     */
+    public Juego getJuego(int Id) {
         Juego j = new Juego();
         try {
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM Juego WHERE id='" + perfilId + "'");
+            ResultSet results = statement.executeQuery("SELECT * FROM Juego WHERE id='" + Id + "'");
             while (results.next()) {
                 int id = results.getInt("id");
                 Timestamp date = results.getTimestamp("fecha");
@@ -225,6 +293,11 @@ public class GameHandler {
         return j;
     }
     
+    /**
+     * Inserta un Juego con el id de un PerfilJuego
+     * @param id
+     * @return Juego creado
+     */
     public Juego insertJuego(int id) {
         try {
             int juegoId = 0;
@@ -244,6 +317,13 @@ public class GameHandler {
         }
     }
     
+    /**
+     * Inserta el Resultado de un juego en la base de datos.
+     * @param juegoId
+     * @param jugadorId
+     * @param pistaId
+     * @return boolean true o false
+     */
     public boolean insertResultado(int juegoId, int jugadorId, int pistaId) {
         try {
             Statement statement = connection.createStatement();
@@ -257,6 +337,11 @@ public class GameHandler {
         }
     }
     
+    /**
+     * Obtiene el resultado de un juego.
+     * @param juegoId
+     * @return ArrayList resultados
+     */
     public ArrayList getResultados(int juegoId) {
         ArrayList resultados = new ArrayList();
         try {
@@ -276,6 +361,11 @@ public class GameHandler {
         return resultados;
     }
     
+    /**
+     * Obtiene el concentrado de todos los juegos del usuario.
+     * @param usuarioId
+     * @return ArrayList resultados
+     */
     public ArrayList getConcentradoFinal(int usuarioId) {
         ArrayList resultados = new ArrayList();
         try {

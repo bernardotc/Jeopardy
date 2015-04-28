@@ -24,6 +24,9 @@ public class TemaCategoriaPistaHandler {
 
     private static Connection connection;
 
+    /**
+     * Método constructor sin parámetros. Las funciones van acceder a la Base de datos.
+     */
     public TemaCategoriaPistaHandler() {
         try {
 
@@ -34,6 +37,10 @@ public class TemaCategoriaPistaHandler {
         }
     }
 
+    /**
+     * Obtiene la lista de temas.
+     * @return ArrayList temas
+     */
     public ArrayList getTemas() {
         ArrayList temas = new ArrayList();
         try {
@@ -52,6 +59,10 @@ public class TemaCategoriaPistaHandler {
         return temas;
     }
     
+    /**
+     * Obtiene la lista de categorías
+     * @return ArrayList categorias
+     */
     public ArrayList getCategorias() {
         ArrayList categorias = new ArrayList();
         try {
@@ -74,6 +85,11 @@ public class TemaCategoriaPistaHandler {
         return categorias;
     }
     
+    /**
+     * Obtiene la lista de categorías que cumplen con el temaid pasado en el parámetro.
+     * @param temid
+     * @return ArrayList categorias
+     */
     public ArrayList getCategorias(int temid) {
         ArrayList categorias = new ArrayList();
         try {
@@ -96,6 +112,10 @@ public class TemaCategoriaPistaHandler {
         return categorias;
     }
     
+    /**
+     * Obtiene la lista de pistas.
+     * @return ArrayList pistas
+     */
     public ArrayList getPistas() {
         ArrayList pistas = new ArrayList();
         try {
@@ -123,6 +143,11 @@ public class TemaCategoriaPistaHandler {
         return pistas;
     }
     
+    /**
+     * Obtiene la lista de pistas que cumplen con el temaid pasado como parámetro.
+     * @param temid
+     * @return ArrayList pistas
+     */
     public ArrayList getPistas(int temid) {
         ArrayList pistas = new ArrayList();
         try {
@@ -150,6 +175,11 @@ public class TemaCategoriaPistaHandler {
         return pistas;
     }
     
+    /**
+     * Obtiene una pista en base a su id.
+     * @param id
+     * @return Pista pista
+     */
     public Pista getPista(int id) {
         Pista pista = new Pista();
         try {
@@ -176,6 +206,11 @@ public class TemaCategoriaPistaHandler {
         return pista;
     }
     
+    /**
+     * Obtiene la lista de pistas que cumplen con la categoriaid pasado como parámetro
+     * @param categorid
+     * @return ArrayList pistas
+     */
     public ArrayList getPistasC(int categorid) {
         ArrayList pistas = new ArrayList();
         try {
@@ -203,6 +238,11 @@ public class TemaCategoriaPistaHandler {
         return pistas;
     }
     
+    /**
+     * Inserta un tema nuevo
+     * @param tema
+     * @return boolean true o false
+     */
     public boolean newTema(String tema) {
         try {
             Statement statement = connection.createStatement();
@@ -216,6 +256,13 @@ public class TemaCategoriaPistaHandler {
         }
     }
     
+    /**
+     * Inserta una categoría nueva.
+     * @param categoria
+     * @param descripcion
+     * @param temaid
+     * @return boolean true o false
+     */
     public boolean newCategoria(String categoria, String descripcion, int temaid) {
         try {
             Statement statement = connection.createStatement();
@@ -229,6 +276,14 @@ public class TemaCategoriaPistaHandler {
         }
     }
     
+    /**
+     * Inserta una pista nueva.
+     * @param redaccion
+     * @param respuesta
+     * @param puntos
+     * @param categoriaid
+     * @return boolean true o false
+     */
     public boolean newPista(String redaccion, String respuesta, int puntos, int categoriaid) {
         try {
             Statement statement = connection.createStatement();
@@ -242,6 +297,14 @@ public class TemaCategoriaPistaHandler {
         }
     }
     
+    /**
+     * Modifica el valor del tipo de la tabla (db) con el id que especifiques.
+     * @param id
+     * @param tipo
+     * @param valor
+     * @param db
+     * @return boolean true o false
+     */
     public boolean modify(int id, String tipo, String valor, String db) {
         try {
             Statement statement = connection.createStatement();
@@ -255,6 +318,12 @@ public class TemaCategoriaPistaHandler {
         } 
     }
     
+    /**
+     * Borra de la base de datos la fila que cumpla con el id de la tabla (db)
+     * @param id
+     * @param db
+     * @return boolean true o false
+     */
     public boolean delete(int id, String db) {
         try {
             Statement statement = connection.createStatement();

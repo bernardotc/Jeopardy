@@ -18,6 +18,9 @@ public class UserHandler {
     
     private static Connection connection;
 
+    /**
+     * Método constructor sin parámetros. Las funciones van acceder a la Base de datos.
+     */
     public UserHandler() {
         try {
             
@@ -28,6 +31,12 @@ public class UserHandler {
         }
     }
     
+    /**
+     * Obtiene el usuario con su user y password
+     * @param user
+     * @param password
+     * @return User usr
+     */
     public User getUser(String user, String password) {
         User usr = null;
         try {            
@@ -51,6 +60,11 @@ public class UserHandler {
         return usr;
     }
     
+    /**
+     * Obtiene el Usuario con id (i)
+     * @param i
+     * @return User usr
+     */
     public User getUser(int i) {
         User usr = null;
         try {            
@@ -74,6 +88,15 @@ public class UserHandler {
         return usr;
     }
     
+    /**
+     * Inserta un usuario en la base de datos.
+     * @param n
+     * @param u
+     * @param a
+     * @param c
+     * @param p
+     * @return Boolean true o false
+     */
     public boolean newUser(String n, String u, String a, String c, String p) {
         try {
             Statement statement = connection.createStatement();
@@ -87,6 +110,12 @@ public class UserHandler {
         }
     }
     
+    /**
+     * Modifica el password de un usuario
+     * @param userid
+     * @param newPass
+     * @return boolean true o false
+     */
     public boolean updatePassword(int userid, String newPass) {
         try {
             Statement statement = connection.createStatement();
